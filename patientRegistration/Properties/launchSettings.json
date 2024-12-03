@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "patientRegistration (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "patientRegistration (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

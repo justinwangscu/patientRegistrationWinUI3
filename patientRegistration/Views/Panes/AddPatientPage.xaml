@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="patientRegistration.Views.Panes.AddPatientPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:patientRegistration.Views.Panes"
+    xmlns:main="using:patientRegistration"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="55"/>
+            </Grid.RowDefinitions>
+
+            <Grid x:Name="addForumGrid"
+                   Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="70*"/>
+                </Grid.ColumnDefinitions>
+                
+                <ScrollViewer>
+                    <StackPanel x:Name="textStack" HorizontalAlignment="Left">
+                        <TextBox 
+                            x:Name="nameBox"
+                            Header="Name" PlaceholderText="" 
+                            Width="200" Margin="10"/>
+                        <TextBox 
+                            x:Name="medRecBox"
+                            Header="Medical Record Number" PlaceholderText="" 
+                            Width="200" Margin="10"/>
+                        <NumberBox 
+                            x:Name="ageBox"
+                            Header="Age"
+                            PlaceholderText="Please input integer"
+                            SpinButtonPlacementMode="Compact"
+                            Width="200"  Margin="10"/>
+                        <TextBox 
+                            x:Name="genderBox"
+                            Header="Gender" PlaceholderText="" 
+                            Width="200"  Margin="10"/>
+                        <TextBox 
+                            x:Name="diagnosisBox"
+                            Header="Admitting Diagnosis" PlaceholderText="" 
+                            Width="200"  Margin="10">
+                            <ToolTipService.ToolTip>
+                                <ToolTip HorizontalOffset="80" PlacementRect="0,0,0,200">
+                                    <InfoBar
+                                        IsOpen="True"
+                                        Severity="Informational"
+                                        Title="Title"
+                                        FontSize="1"
+                                        Message="Patients are automatically assigned an attending physician and department based on the admitting diagnosis." />
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+
+                        </TextBox>
+                        <TextBox
+                            x:Name="physicianBox"
+                            Header="Attending Physician"
+                            Width="200" Margin="10"
+                            PlaceholderText="Filled based on diagnosis"
+                            IsReadOnly="True"
+                            Background="LightGray">
+                            <ToolTipService.ToolTip>
+                                <ToolTip HorizontalOffset="80" PlacementRect="0,0,0,200">
+                                    <InfoBar
+                                        IsOpen="True"
+                                        Severity="Informational"
+                                        Title="Title"
+                                        FontSize="1"
+                                        Message="Breast and lung cancer patients are assigned to Dr. Susan Jones; all other patients are assigned to Dr. Ben Smith." />
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+                        </TextBox>
+                        <TextBox
+                            x:Name="departmentBox"
+                            Header="Department"
+                            Width="200" Margin="10"
+                            PlaceholderText="Filled based on diagnosis"
+                            IsReadOnly="True"
+                            Background="LightGray">
+                            <ToolTipService.ToolTip>
+                                <ToolTip>
+                                    <InfoBar
+                                        IsOpen="True"
+                                        Severity="Informational"
+                                        Title="Title"
+                                        FontSize="1"
+                                        Message="Patients seeing Dr. Susan Jones are assigned to department J; all other patients are assigned to department S."/>
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+                        </TextBox>
+                    </StackPanel>
+                </ScrollViewer>
+                
+                <ScrollViewer Grid.Column="1">
+                    <StackPanel>
+                        <TextBlock Margin="10" Text="Contacts:"/>
+                        <ListView x:Name="contactsListView"  ItemsSource="{x:Bind newContactList}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="main:Contact">
+                                    <StackPanel Margin="10">
+                                        <StackPanel.ContextFlyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutItem x:Name="deleteFlyout"  Text="Delete" Click="deleteFlyout_Click"/>
+                                                <MenuFlyoutItem x:Name="editFlyout"  Text="Edit" Click="editFlyout_Click"/>
+                                            </MenuFlyout>
+
+                                        </StackPanel.ContextFlyout>
+                                        
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{x:Bind Name}"/>
+                                            <TextBlock Text="{x:Bind Relationship}" Margin="10,0,0,0"/>
+
+                                        </StackPanel>
+                                        
+                                        <TextBlock Text="{x:Bind ContactInfo}"/>
+
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox 
+                                x:Name="contactNameBox"
+                                Header="Name" PlaceholderText="" 
+                                Width="200" Margin="10"/>
+                            <TextBox 
+                                x:Name="contactRelationshipBox"
+                                Header="Relationship" PlaceholderText="" 
+                                Width="200" Margin="10"/>
+                            <TextBox 
+                                x:Name="contactInfoBox"
+                                Header="Contact Info" PlaceholderText="" 
+                                Width="200" Margin="10"/>
+                            <Button
+                                x:Name="addContactBtn"
+                                Content="Add Contact"
+                                Margin="10, 10, 0, 0"
+                                Click="addContactBtn_Click"
+                                />
+                        </StackPanel>
+                                                
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+            <Grid Grid.Row="1" BorderBrush="AliceBlue" BorderThickness="0 1 0 0">
+                <StackPanel Grid.Row ="1" Margin="10" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" >
+                    <Button     x:Name="applyBtn"
+                                Content="Apply"
+                                Style="{StaticResource AccentButtonStyle}"
+                                Click="applyBtn_Click"/>
+                
+                    <Button     x:Name="cancelBtn"
+                                Content="Cancel"
+                                Background="Gray"
+                                Margin="20,0,0,0"
+                                Click="cancelBtn_Click"/>
+                </StackPanel>
+                
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

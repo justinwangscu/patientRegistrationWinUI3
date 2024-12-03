@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="patientRegistration.Views.Panes.PatientGrid"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:patientRegistration.Views.Panes"
+    xmlns:main="using:patientRegistration"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <controls:DataGrid  x:Name="dataGrid"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            BorderBrush="CadetBlue"
+                            BorderThickness="2"
+                            GridLinesVisibility="All"
+                            AlternatingRowBackground="Gray" 
+                            VerticalScrollBarVisibility="Visible"
+                            HorizontalScrollBarVisibility="Visible"
+                            FrozenColumnCount="0"
+                            CanUserSortColumns="True"
+                            CanUserResizeColumns="True"
+                            SelectionMode="Single"
+                            AutoGenerateColumns="True"
+                            AutoGeneratingColumn="dataGrid_AutoGeneratingColumn"
+                            
+                            ItemsSource="{x:Bind main:App.AppPatients}" >
+
+            <controls:DataGrid.RowDetailsTemplate>
+                <DataTemplate x:DataType="main:Patient">
+                    <StackPanel Orientation="Vertical">
+                        
+                        <StackPanel Margin="20,10" Padding="5" Spacing="2">
+                            <TextBlock Margin="10" Text="Here are a list of contacts for this person:"/>
+                                <ListView ItemsSource="{x:Bind Contacts}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="main:Contact">
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{x:Bind Name}"/>
+                                                <TextBlock Text="{x:Bind Relationship}" Margin="10,0,0,0"/>
+                                                
+                                            </StackPanel>
+                                            <TextBlock Text="{x:Bind ContactInfo}"/>
+                                            
+                                        </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="editBtn" 
+                                    Content="Edit info" 
+                                    Margin="10"  
+                                    Click="editBtn_Click" />
+                            <StackPanel >
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="Only patients without an admitting diagnosis can be removed from the system."/>
+                                </ToolTipService.ToolTip>
+                                <Button x:Name="deleteBtn" 
+                                        Content="Delete patient" 
+                                        Margin="10"  
+                                        Background="Red"
+                                        IsEnabled="{x:Bind CanBeDeleted, Mode=OneWay}"
+                                        >            
+                                    <Button.Resources>
+                                        <Color x:Key="ButtonBackgroundPointerOver">Tomato</Color>
+                                        <Color x:Key="ButtonBackground">Red</Color>
+                                        <Color x:Key="ButtonBackgroundPressed">DarkRed</Color>
+                                    </Button.Resources>
+                                    <Button.Flyout>
+                                        <Flyout >
+                                            <StackPanel x:Name="delFlyout">
+                                                <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="Are you sure you want to delete this patient?" Margin="0,0,0,12" />
+                                                <Button Click="deleteBtn_Click" Content="Yes" />
+                                            </StackPanel>
+                                        </Flyout>
+                                    </Button.Flyout>
+
+                                </Button>
+                                
+                            </StackPanel>
+
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </controls:DataGrid.RowDetailsTemplate>
+        </controls:DataGrid>
+        
+    </Grid>
+</Page>
