@@ -40,8 +40,8 @@ namespace patientRegistration.Views.Panes
             BaseExample.ItemsSource = new List<ExampleContact>
             { 
                 new ExampleContact ("Justin", "Wang", "None"),
-                new ExampleContact ("Justin", "B. Wang", "PHHS"),
-                new ExampleContact ("Alexander", "Boya Minoru Zhang", "Amazon")
+                new ExampleContact ("Justin", "Wang 2", "PHHS"),
+                new ExampleContact ("Alexander", "B. M. Zhang", "Amazon")
             };
 
         }
@@ -75,7 +75,7 @@ namespace patientRegistration.Views.Panes
             
             List<ExampleContact> li = new List<ExampleContact>();
             li.Add(new ExampleContact("Justin", "Wang", "None"));
-            li.Add(new ExampleContact("Justin", "B. Wang", "School"));
+            li.Add(new ExampleContact("Justin", "Wang 2", "School"));
             return li;
 
         }
@@ -84,7 +84,7 @@ namespace patientRegistration.Views.Panes
         {
             List<ExampleContact> li = new List<ExampleContact>();
             li.Add(new ExampleContact("Justin", "Wang", "None"));
-            li.Add(new ExampleContact("Justin", "B. Wang", "School"));
+            li.Add(new ExampleContact("Justin", "Wang 2", "School"));
             return li;
 
         }

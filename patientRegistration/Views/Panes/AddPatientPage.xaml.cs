@@ -106,6 +106,7 @@ namespace patientRegistration.Views.Panes
             newContactList.Add(newContact);
         }
         
+        // Checks if required fields are filled out. Checks if entered medical record number would be unique in the database. Adds/Updates Patient information.
         private void applyBtn_Click(object sender, RoutedEventArgs e)
         {
             // Get fields from text boxes
@@ -117,17 +118,27 @@ namespace patientRegistration.Views.Panes
 
             int age = -1;
 
+            bool error = false;
+            if (medRecNum == "")
+            {
+                medRecBox.PlaceholderText = "Required";
+                error = true;
+            }
+            //if(!DataAccess.isUniqueMedRecNum(medRecNum))
+            //{
+            //    medRecBox.Text = "";
+            //    medRecBox.PlaceholderText = "Medical ID in Use";
+            //    error = true;
+            //}
             // Name is required
             if (name == "")
             {
                 nameBox.PlaceholderText = "Required";
+                error = true;
+            }
+
+            if(error)
                 return;
-            }
-
-            if(!DataAccess.isUniqueMedRecNum(medRecNum))
-            {
-
-            }
 
             // If age is not empty string -> get int
             if (stringAge != "" && stringAge != null)
@@ -145,6 +156,7 @@ namespace patientRegistration.Views.Panes
                 }
             }
 
+            // If the user was in the middle of filing a contact out it will add it if valid
             addContactFromTextBox();
 
             newPatient.Name = name;
